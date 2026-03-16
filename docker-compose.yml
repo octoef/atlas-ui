@@ -1,0 +1,28 @@
+services:
+  atlas-ui:
+    build: .
+    container_name: atlas-ui
+    restart: unless-stopped
+    security_opt:
+      - apparmor:unconfined
+    ports:
+      - "3080:3000"
+    environment:
+      - NODE_ENV=production
+      - PROXMOX_HOST=10.0.60.204
+      - PROXMOX_USER=ansible@pve
+      - PROXMOX_TOKEN_ID=inventory
+      - PROXMOX_TOKEN_SECRET=${PROXMOX_TOKEN_SECRET}
+      - UPTIME_KUMA_URL=http://uptime-kuma:3001
+      - PORTAINER_API_KEY=${PORTAINER_API_KEY}
+      - PORTAINER_STACK_URL=https://10.0.60.111:9443
+      - PORTAINER_STUCK_URL=https://10.0.60.116:9443
+      - PORTAINER_ATLAS_URL=https://10.0.60.120:9443
+      - PORTAINER_NPMPLUS_URL=https://10.0.60.211:9443
+      - PORTAINER_DOCKER_URL=https://10.0.60.212:9443
+    networks:
+      - atlas-net
+
+networks:
+  atlas-net:
+    external: true
