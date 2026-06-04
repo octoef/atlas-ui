@@ -1,7 +1,12 @@
 // Uptime Kuma integration - use metrics endpoint
+function requireEnv(name) {
+  const v = process.env[name];
+  if (!v) throw new Error(`${name} is required (no insecure default; set it in the runtime env)`);
+  return v;
+}
 const UPTIME_KUMA_URL = process.env.UPTIME_KUMA_URL || 'http://127.0.0.1:3001';
 const UPTIME_KUMA_USER = process.env.UPTIME_KUMA_USER || 'admin';
-const UPTIME_KUMA_PASS = process.env.UPTIME_KUMA_PASS || 'REDACTED_PASSWORD';
+const UPTIME_KUMA_PASS = requireEnv('UPTIME_KUMA_PASS');
 const TIMEOUT_MS = 2000;
 
 export async function getMonitorStatus() {

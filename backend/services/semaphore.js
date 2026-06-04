@@ -1,7 +1,12 @@
 // Semaphore API integration for Atlas UI
+function requireEnv(name) {
+  const v = process.env[name];
+  if (!v) throw new Error(`${name} is required (no insecure default; set it in the runtime env)`);
+  return v;
+}
 const SEMAPHORE_URL = process.env.SEMAPHORE_URL || 'http://localhost:3002';
 const SEMAPHORE_USER = process.env.SEMAPHORE_USER || 'admin';
-const SEMAPHORE_PASS = process.env.SEMAPHORE_PASS || 'REDACTED_PASSWORD';
+const SEMAPHORE_PASS = requireEnv('SEMAPHORE_PASS');
 const TIMEOUT_MS = 2000;
 
 let sessionCookie = null;

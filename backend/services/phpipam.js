@@ -1,9 +1,14 @@
 // phpIPAM integration for Atlas UI
 import { exec } from 'child_process';
 
+function requireEnv(name) {
+  const v = process.env[name];
+  if (!v) throw new Error(`${name} is required (no insecure default; set it in the runtime env)`);
+  return v;
+}
 const PHPIPAM_URL = process.env.PHPIPAM_URL || 'http://127.0.0.1:8080/api/homelab';
 const PHPIPAM_USER = process.env.PHPIPAM_USER || 'Admin';
-const PHPIPAM_PASS = process.env.PHPIPAM_PASS || 'REDACTED_PASSWORD';
+const PHPIPAM_PASS = requireEnv('PHPIPAM_PASS');
 const TIMEOUT_MS = 2000;
 
 let token = null;
